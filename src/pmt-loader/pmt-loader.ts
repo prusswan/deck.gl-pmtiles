@@ -1,6 +1,10 @@
-import type { Loader, LoaderWithParser, LoaderOptions } from "@loaders.gl/loader-utils";
+import type {
+  Loader,
+  LoaderWithParser,
+  LoaderOptions,
+} from "@loaders.gl/loader-utils";
 import { decompressSync } from "fflate";
-import ParseMVT from "@loaders.gl/mvt/dist/lib/parse-mvt";
+import { MVTLoader } from "@loaders.gl/mvt";
 import { MVTLoaderOptions } from "@loaders.gl/mvt/dist/lib/types";
 import { ImageLoaderOptions } from "@loaders.gl/images/dist/image-loader";
 import { Compression } from "pmtiles";
@@ -12,17 +16,20 @@ type PMTLoaderOptions = LoaderOptions & {
   pmt?: {
     raster?: boolean;
     tileCompression?: Compression;
-  }
+  };
 };
 
-const DEFAULT_PMT_LOADER_OPTIONS: PMTLoaderOptions & MVTLoaderOptions & ImageLoaderOptions = {
+const ParseMVT = MVTLoader.parse;
+
+const DEFAULT_PMT_LOADER_OPTIONS: PMTLoaderOptions &
+  MVTLoaderOptions &
+  ImageLoaderOptions = {
   pmt: {
-    raster: false
+    raster: false,
   },
   // @ts-ignore
-  mvt: {
-  },
-  image: {}
+  mvt: {},
+  image: {},
 };
 /**
  * Worker loader for the Mapbox Vector Tile format
@@ -46,11 +53,11 @@ export const PMTLoader: LoaderWithParser = {
   ...PMTWorkerLoader,
   // @ts-ignore
   parse: async (arrayBuffer, options?: PMTLoaderOptions) => {
-    return parsePMT(arrayBuffer, options)
+    return parsePMT(arrayBuffer, options);
   },
   // @ts-ignore
   parseSync: (arrayBuffer, options?: PMTLoaderOptions) => {
-    return parsePMT(arrayBuffer, options)
+    return parsePMT(arrayBuffer, options);
   },
   binary: true,
 };
@@ -63,13 +70,16 @@ export const PMTLoader: LoaderWithParser = {
  * @returns A GeoJSON geometry object or a binary representation
  */
 function parsePMT(arrayBuffer: ArrayBuffer, options?: PMTLoaderOptions) {
-  if (options && options?.pmt?.raster){
-    const blob = new Blob([arrayBuffer], {type: "image/png"});
+  if (options && options?.pmt?.raster) {
+    const blob = new Blob([arrayBuffer], { type: "image/png" });
     const url = URL.createObjectURL(blob);
     // const url = window.URL.createObjectURL(blob);
     return createImageBitmap(blob);
   } else if (options?.pmt?.tileCompression) {
-    const decompressed = fflateDecompress(arrayBuffer, options.pmt.tileCompression)
+    const decompressed = fflateDecompress(
+      arrayBuffer,
+      options.pmt.tileCompression
+    );
     const tiledata = ParseMVT(decompressed, options);
     return tiledata;
   }
@@ -85,6 +95,5 @@ function fflateDecompress(
     return decompressSync(new Uint8Array(buf));
   } else {
     throw Error("Compression method not supported");
-
   }
 }
