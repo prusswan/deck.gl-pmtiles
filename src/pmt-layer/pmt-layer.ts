@@ -6,13 +6,11 @@ import { findTile, PMTiles, zxyToTileId } from "pmtiles";
 import type { BinaryFeatures } from "@loaders.gl/schema";
 import type { Feature } from "geojson";
 
-import type {Loader} from '@loaders.gl/loader-utils';
+import type { Loader } from "@loaders.gl/loader-utils";
 
 import { PMTWorkerLoader } from "../pmt-loader";
 
-
 // from @deck.gl/geo-layers/src/mvt-layer/mvt-layer
-
 
 export type TileJson = {
   tilejson: string;
@@ -52,12 +50,22 @@ export type _MVTLayerProps = {
 };
 
 // From @deck.gl/geo-layers/typed/tile-layer/types
-export type GeoBoundingBox = {west: number; north: number; east: number; south: number};
-export type NonGeoBoundingBox = {left: number; top: number; right: number; bottom: number};
+export type GeoBoundingBox = {
+  west: number;
+  north: number;
+  east: number;
+  south: number;
+};
+export type NonGeoBoundingBox = {
+  left: number;
+  top: number;
+  right: number;
+  bottom: number;
+};
 
 export type TileBoundingBox = NonGeoBoundingBox | GeoBoundingBox;
 
-export type TileIndex = {x: number; y: number; z: number};
+export type TileIndex = { x: number; y: number; z: number };
 
 export type TileLoadProps = {
   index: TileIndex;
@@ -69,7 +77,6 @@ export type TileLoadProps = {
   zoom?: number;
 };
 
-
 export type ParsedPmTile = Feature[] | BinaryFeatures;
 
 export type ExtraProps = {
@@ -78,10 +85,9 @@ export type ExtraProps = {
 
 export type _PMTLayerProps = _MVTLayerProps & ExtraProps;
 
-export type PmtLayerProps<DataT extends Feature = Feature> = _PMTLayerProps &
-  GeoJsonLayerProps<DataT> &
-  TileLayerProps<ParsedPmTile>;
+export type PmtLayerProps = _PMTLayerProps & TileLayerProps<ParsedPmTile>;
 
+// @ts-ignore
 const defaultProps: DefaultProps<PmtLayerProps> = {
   ...GeoJsonLayer.defaultProps,
   onDataLoad: { type: "function", value: null, optional: true, compare: false },
@@ -89,7 +95,7 @@ const defaultProps: DefaultProps<PmtLayerProps> = {
   highlightedFeatureId: null,
   binary: true,
   raster: false,
-  loaders: [PMTWorkerLoader]
+  loaders: [PMTWorkerLoader],
 };
 
 type ZxyOffset = { offset: number; length: number };
@@ -138,11 +144,11 @@ export class DeckglPmtiles extends PMTiles {
     throw Error("Maximum directory depth exceeded");
   }
 }
-
+// @ts-ignore
 export class PMTLayer<
   DataT extends Feature = Feature,
   ExtraProps = {}
-> extends MVTLayer<DataT, ExtraProps> {
+> extends MVTLayer<DataT & ExtraProps> {
   static layerName = "PMTilesLayer";
   static defaultProps = defaultProps;
 
@@ -193,7 +199,8 @@ export class PMTLayer<
           ...loadOptions,
           mimeType: "application/x-protobuf",
           pmt: {
-            workerUrl: "https://unpkg.com/@maticoapp/deck.gl-pmtiles@latest/dist/pmt-worker.js",
+            workerUrl:
+              "https://unpkg.com/@maticoapp/deck.gl-pmtiles@latest/dist/pmt-worker.js",
             coordinates: this.context.viewport.resolution ? "wgs84" : "local",
             tileIndex: index,
             raster: raster,
