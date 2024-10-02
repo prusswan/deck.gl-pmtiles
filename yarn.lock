@@ -2791,6 +2791,9 @@ __metadata:
     "@babel/preset-env": ^7.18.10
     "@loaders.gl/core": ^4.0.0
     "@loaders.gl/csv": ^4.0.0
+    "@rollup/plugin-commonjs": ^28.0.0
+    "@rollup/plugin-json": ^6.1.0
+    "@rollup/plugin-node-resolve": ^15.3.0
     "@types/ms": ^0.7.30
     "@typescript-eslint/eslint-plugin": latest
     "@typescript-eslint/parser": latest
@@ -5734,6 +5737,58 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@rollup/plugin-commonjs@npm:^28.0.0":
+  version: 28.0.0
+  resolution: "@rollup/plugin-commonjs@npm:28.0.0"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.1
+    commondir: ^1.0.1
+    estree-walker: ^2.0.2
+    fdir: ^6.1.1
+    is-reference: 1.2.1
+    magic-string: ^0.30.3
+    picomatch: ^2.3.1
+  peerDependencies:
+    rollup: ^2.68.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: cd2dbb85375a077dae326da482b8590552e18267f17b6213bfa638824c50384e01376579535a9ab7d42a8fc2c674cc0ef8d850a8c36878cc182f8e32b634d0ad
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-json@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@rollup/plugin-json@npm:6.1.0"
+  dependencies:
+    "@rollup/pluginutils": ^5.1.0
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: cc018d20c80242a2b8b44fae61a968049cf31bb8406218187cc7cda35747616594e79452dd65722e7da6dd825b392e90d4599d43cd4461a02fefa2865945164e
+  languageName: node
+  linkType: hard
+
+"@rollup/plugin-node-resolve@npm:^15.3.0":
+  version: 15.3.0
+  resolution: "@rollup/plugin-node-resolve@npm:15.3.0"
+  dependencies:
+    "@rollup/pluginutils": ^5.0.1
+    "@types/resolve": 1.20.2
+    deepmerge: ^4.2.2
+    is-module: ^1.0.0
+    resolve: ^1.22.1
+  peerDependencies:
+    rollup: ^2.78.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 90e4e94b173e7edd57e374ac0cc0a69cc6f1b4507e83731132ac6fa1747d96a5648a48441e4452728429b6db5e67561439b7b2f4d2c6a941a33d38be56d871b4
+  languageName: node
+  linkType: hard
+
 "@rollup/pluginutils@npm:^4.1.1":
   version: 4.2.1
   resolution: "@rollup/pluginutils@npm:4.2.1"
@@ -5741,6 +5796,22 @@ __metadata:
     estree-walker: ^2.0.1
     picomatch: ^2.2.2
   checksum: 6bc41f22b1a0f1efec3043899e4d3b6b1497b3dea4d94292d8f83b4cf07a1073ecbaedd562a22d11913ff7659f459677b01b09e9598a98936e746780ecc93a12
+  languageName: node
+  linkType: hard
+
+"@rollup/pluginutils@npm:^5.0.1, @rollup/pluginutils@npm:^5.1.0":
+  version: 5.1.2
+  resolution: "@rollup/pluginutils@npm:5.1.2"
+  dependencies:
+    "@types/estree": ^1.0.0
+    estree-walker: ^2.0.2
+    picomatch: ^2.3.1
+  peerDependencies:
+    rollup: ^1.20.0||^2.0.0||^3.0.0||^4.0.0
+  peerDependenciesMeta:
+    rollup:
+      optional: true
+  checksum: 16c8c154fef9a32c513b52bd79c92ac427edccd05a8dc3994f10c296063940c57bf809d05903b473d9d408aa5977d75b98c701f481dd1856d5ffc37187ac0060
   languageName: node
   linkType: hard
 
@@ -5874,6 +5945,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/estree@npm:*, @types/estree@npm:^1.0.0":
+  version: 1.0.6
+  resolution: "@types/estree@npm:1.0.6"
+  checksum: 8825d6e729e16445d9a1dd2fb1db2edc5ed400799064cd4d028150701031af012ba30d6d03fe9df40f4d7a437d0de6d2b256020152b7b09bde9f2e420afdffd9
+  languageName: node
+  linkType: hard
+
 "@types/geojson@npm:*, @types/geojson@npm:^7946.0.7, @types/geojson@npm:^7946.0.8":
   version: 7946.0.12
   resolution: "@types/geojson@npm:7946.0.12"
@@ -5942,6 +6020,13 @@ __metadata:
     "@types/scheduler": "*"
     csstype: ^3.0.2
   checksum: 75903c4d53898c69dd23d0b2730eac4676dc5ade15c25c793dec855f0d7c650cb823832bb1dd881efe8895724f15b06d4bf7081ea0b82391aa3059512ad49ccf
+  languageName: node
+  linkType: hard
+
+"@types/resolve@npm:1.20.2":
+  version: 1.20.2
+  resolution: "@types/resolve@npm:1.20.2"
+  checksum: 61c2cad2499ffc8eab36e3b773945d337d848d3ac6b7b0a87c805ba814bc838ef2f262fc0f109bfd8d2e0898ff8bd80ad1025f9ff64f1f71d3d4294c9f14e5f6
   languageName: node
   linkType: hard
 
@@ -6910,6 +6995,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deepmerge@npm:^4.2.2":
+  version: 4.3.1
+  resolution: "deepmerge@npm:4.3.1"
+  checksum: 2024c6a980a1b7128084170c4cf56b0fd58a63f2da1660dcfe977415f27b17dbe5888668b59d0b063753f3220719d5e400b7f113609489c90160bb9a5518d052
+  languageName: node
+  linkType: hard
+
 "define-data-property@npm:^1.0.1, define-data-property@npm:^1.1.1":
   version: 1.1.1
   resolution: "define-data-property@npm:1.1.1"
@@ -7513,7 +7605,7 @@ eslint-plugin-react@latest:
   languageName: node
   linkType: hard
 
-"estree-walker@npm:^2.0.1":
+"estree-walker@npm:^2.0.1, estree-walker@npm:^2.0.2":
   version: 2.0.2
   resolution: "estree-walker@npm:2.0.2"
   checksum: 6151e6f9828abe2259e57f5fd3761335bb0d2ebd76dc1a01048ccee22fabcfef3c0859300f6d83ff0d1927849368775ec5a6d265dde2f6de5a1be1721cd94efc
@@ -7616,6 +7708,18 @@ eslint-plugin-react@latest:
   dependencies:
     reusify: ^1.0.4
   checksum: 0170e6bfcd5d57a70412440b8ef600da6de3b2a6c5966aeaf0a852d542daff506a0ee92d6de7679d1de82e644bce69d7a574a6c93f0b03964b5337eed75ada1a
+  languageName: node
+  linkType: hard
+
+"fdir@npm:^6.1.1":
+  version: 6.4.0
+  resolution: "fdir@npm:6.4.0"
+  peerDependencies:
+    picomatch: ^3 || ^4
+  peerDependenciesMeta:
+    picomatch:
+      optional: true
+  checksum: 63b4dc592c662d0c4703ffcae1e3ad15901c0b9f64e742dff1bbc74f58029b1a43f4d05b0ab75503a0b9fc7a616d8a755cd56ea680504b6a1e87249ec79b43f3
   languageName: node
   linkType: hard
 
@@ -8307,6 +8411,13 @@ eslint-plugin-react@latest:
   languageName: node
   linkType: hard
 
+"is-module@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "is-module@npm:1.0.0"
+  checksum: 8cd5390730c7976fb4e8546dd0b38865ee6f7bacfa08dfbb2cc07219606755f0b01709d9361e01f13009bbbd8099fa2927a8ed665118a6105d66e40f1b838c3f
+  languageName: node
+  linkType: hard
+
 "is-negative-zero@npm:^2.0.2":
   version: 2.0.2
   resolution: "is-negative-zero@npm:2.0.2"
@@ -8334,6 +8445,15 @@ eslint-plugin-react@latest:
   version: 3.0.3
   resolution: "is-path-inside@npm:3.0.3"
   checksum: abd50f06186a052b349c15e55b182326f1936c89a78bf6c8f2b707412517c097ce04bc49a0ca221787bc44e1049f51f09a2ffb63d22899051988d3a618ba13e9
+  languageName: node
+  linkType: hard
+
+"is-reference@npm:1.2.1":
+  version: 1.2.1
+  resolution: "is-reference@npm:1.2.1"
+  dependencies:
+    "@types/estree": "*"
+  checksum: e7b48149f8abda2c10849ea51965904d6a714193d68942ad74e30522231045acf06cbfae5a4be2702fede5d232e61bf50b3183acdc056e6e3afe07fcf4f4b2bc
   languageName: node
   linkType: hard
 
@@ -8720,7 +8840,7 @@ eslint-plugin-react@latest:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.10":
+"magic-string@npm:^0.30.10, magic-string@npm:^0.30.3":
   version: 0.30.11
   resolution: "magic-string@npm:0.30.11"
   dependencies:
