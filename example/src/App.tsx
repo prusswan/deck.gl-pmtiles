@@ -1,9 +1,17 @@
 import { useState } from "react";
 import { PMTLayer } from "../../src";
 import "./App.css";
+
+//https://deck.gl/docs/get-started/using-with-typescript: v9 and v8 syntax differences
+/*
 import DeckGL from "@deck.gl/react/typed";
 import { BitmapLayer, GeoJsonLayer } from "@deck.gl/layers/typed";
 import { TileLayer } from "@deck.gl/geo-layers/typed";
+*/
+import DeckGL from '@deck.gl/react';
+import { BitmapLayer, GeoJsonLayer } from "@deck.gl/layers";
+import { TileLayer } from "@deck.gl/geo-layers";
+
 import {
   RangeSlider,
   TextField,

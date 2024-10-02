@@ -1,17 +1,19 @@
 
 import { LoaderWithParser } from "@loaders.gl/loader-utils";
-import type { BinaryFeatures } from "@loaders.gl/schema";
+// see https://unpkg.com/browse/@deck.gl/geo-layers@9.0.27/dist/mvt-layer/mvt-layer.d.ts
+//import type { BinaryFeatures } from "@loaders.gl/schema";
+import type { BinaryFeatureCollection } from "@loaders.gl/schema";
 
 export type DataShapeNames = keyof DataShapes;
 export type DataShapes = {
-  "binary": BinaryFeatures,
-  "binary-geometry": BinaryFeatures
-  "columnar-table": {'shape': "columnar-table", 'data': BinaryFeatures},
+  "binary": BinaryFeatureCollection,
+  "binary-geometry": BinaryFeatureCollection
+  "columnar-table": {'shape': "columnar-table", 'data': BinaryFeatureCollection},
   "geojson": GeoJSON.FeatureCollection,
   "geojson-row-table": {'shape': "geojson-row-table", 'data': GeoJSON.FeatureCollection},
 
 }
-export type BinaryEntries = [keyof BinaryFeatures, any];
+export type BinaryEntries = [keyof BinaryFeatureCollection, any];
 export type JoinLoaderProps = {
     loader: LoaderWithParser;
     shape: "binary";
@@ -23,4 +25,3 @@ export type JoinLoaderProps = {
     updateTriggers?: any[];
   }
 export  type JoinLoader = (props: JoinLoaderProps) => LoaderWithParser;
-  

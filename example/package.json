@@ -14,7 +14,7 @@
     "@loaders.gl/csv": "^3.2.9",
     "@react-spectrum/color": "^3.0.0-beta.15",
     "@tanstack/react-query": "^4.2.3",
-    "deck.gl": "^8.8.9",
+    "deck.gl": "9.0.32",
     "fflate": "^0.7.3",
     "pmtiles": "^1.1.0",
     "react": "^18.2.0",

@@ -1,9 +1,12 @@
 import type { Loader, LoaderWithParser, LoaderOptions } from "@loaders.gl/loader-utils";
 //@ts-ignore
 import { decompressSync } from "fflate";
-import ParseMVT from "@loaders.gl/mvt/dist/lib/parse-mvt";
-import { MVTLoaderOptions } from "@loaders.gl/mvt/dist/lib/types";
-import parseImage from '@loaders.gl/images/dist/lib/parsers/parse-image'
+//import ParseMVT from "@loaders.gl/mvt/dist/lib/parse-mvt";
+//import { MVTLoaderOptions } from "@loaders.gl/mvt/dist/lib/types";
+////import ParseMVT from "@loaders.gl/mvt";
+import { MVTLoaderOptions } from "@loaders.gl/mvt";
+//import parseImage from '@loaders.gl/images/dist/lib/parsers/parse-image'
+////import parseImage from '@loaders.gl/images'
 import { ImageLoaderOptions } from "@loaders.gl/images/dist/image-loader";
 // __VERSION__ is injected by babel-plugin-version-inline
 // @ts-ignore TS2304: Cannot find name '__VERSION__'.
@@ -11,7 +14,7 @@ const VERSION = typeof __VERSION__ !== "undefined" ? __VERSION__ : "latest";
 
 type JoinLoaderOptions = LoaderOptions & {
   join?: {
-    
+
   }
 }
 

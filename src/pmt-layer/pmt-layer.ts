@@ -1,9 +1,18 @@
+//https://deck.gl/docs/get-started/using-with-typescript: v9 and v8 syntax differences
+/*
 import { type TileLayerProps, MVTLayer } from "@deck.gl/geo-layers/typed";
 import { type DefaultProps } from "@deck.gl/core/typed";
 import { GeoJsonLayer, type GeoJsonLayerProps } from "@deck.gl/layers/typed";
+*/
+import { type TileLayerProps, MVTLayer } from "@deck.gl/geo-layers";
+import { type DefaultProps } from "@deck.gl/core";
+import { GeoJsonLayer, type GeoJsonLayerProps } from "@deck.gl/layers";
 
 import { findTile, PMTiles, zxyToTileId } from "pmtiles";
-import type { BinaryFeatures } from "@loaders.gl/schema";
+
+// see https://unpkg.com/browse/@deck.gl/geo-layers@9.0.27/dist/mvt-layer/mvt-layer.d.ts
+//import type { BinaryFeatures } from "@loaders.gl/schema";
+import type { BinaryFeatureCollection } from "@loaders.gl/schema";
 import type { Feature } from "geojson";
 
 import type { Loader } from "@loaders.gl/loader-utils";
@@ -77,7 +86,8 @@ export type TileLoadProps = {
   zoom?: number;
 };
 
-export type ParsedPmTile = Feature[] | BinaryFeatures;
+//export type ParsedPmTile = Feature[] | BinaryFeatures;
+export type ParsedPmTile = Feature[] | BinaryFeatureCollection;
 
 export type ExtraProps = {
   raster?: boolean;
@@ -152,6 +162,18 @@ export class PMTLayer<
   static layerName = "PMTilesLayer";
   static defaultProps = defaultProps;
 
+  /*
+  state!: MVTLayer<ParsedPmTile>['state'] & {
+    binary: boolean;
+    //data: URLTemplate;
+    tileJSON: TileJson | null;
+    highlightColor?: number[];
+    hoveredFeatureId: number | string | null;
+    hoveredFeatureLayerName: string | null;
+  };
+  */
+  //state!: defaultProps;
+
   initializeState(): void {
     super.initializeState();
     // GlobeView doesn't work well with binary data
@@ -176,9 +198,15 @@ export class PMTLayer<
       binary,
       raster,
       data: null,
+      // newly added below:
+      tileJSON: null,
+      hoveredFeatureId: null,
+      hoveredFeatureLayerName: null
     });
   }
 
+//https://unpkg.com/browse/@deck.gl/geo-layers@9.0.27/src/mvt-layer/mvt-layer.ts
+//https://unpkg.com/browse/@deck.gl/geo-layers@8.8.9/src/mvt-layer/mvt-layer.ts
   getTileData(loadProps: TileLoadProps, iter?: number): Promise<ParsedPmTile> {
     const { index, signal } = loadProps;
     const { data, binary, raster, pmtiles, header } = this.state;

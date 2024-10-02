@@ -1,12 +1,14 @@
 import { useMemo } from "react";
 import { LoaderWithParser } from "@loaders.gl/loader-utils";
-import type { BinaryFeatures } from "@loaders.gl/schema";
+// see https://unpkg.com/browse/@deck.gl/geo-layers@9.0.27/dist/mvt-layer/mvt-layer.d.ts
+//import type { BinaryFeatures } from "@loaders.gl/schema";
+import type { BinaryFeatureCollection } from "@loaders.gl/schema";
 
 type DataShapeNames = keyof DataShapes;
 type DataShapes = {
-  binary: BinaryFeatures;
-  "binary-geometry": BinaryFeatures;
-  "columnar-table": { shape: "columnar-table"; data: BinaryFeatures };
+  binary: BinaryFeatureCollection;
+  "binary-geometry": BinaryFeatureCollection;
+  "columnar-table": { shape: "columnar-table"; data: BinaryFeatureCollection };
   geojson: GeoJSON.FeatureCollection;
   "geojson-row-table": {
     shape: "geojson-row-table";
@@ -14,7 +16,7 @@ type DataShapes = {
   };
 };
 
-type BinaryEntries = [keyof BinaryFeatures, any];
+type BinaryEntries = [keyof BinaryFeatureCollection, any];
 
 function join<T extends DataShapeNames>({
   mapData,
@@ -32,7 +34,7 @@ function join<T extends DataShapeNames>({
     case "binary-geometry":
     case "binary": {
       const isColumnar = shape === "columnar-table";
-      const dataInner = isColumnar 
+      const dataInner = isColumnar
         ? (mapData as DataShapes["columnar-table"])['data']
         : mapData as DataShapes["binary"];
       // @ts-ignore
@@ -57,7 +59,7 @@ function join<T extends DataShapeNames>({
     case "geojson-row-table":
     case "geojson": {
       const isRowTable = shape === "geojson-row-table";
-      const dataInner = isRowTable 
+      const dataInner = isRowTable
         ? (mapData as DataShapes["geojson-row-table"])['data']
         : mapData as DataShapes["geojson"];
 

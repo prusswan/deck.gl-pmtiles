@@ -5,7 +5,8 @@ import type {
 } from "@loaders.gl/loader-utils";
 import { decompressSync } from "fflate";
 import { MVTLoader } from "@loaders.gl/mvt";
-import { MVTLoaderOptions } from "@loaders.gl/mvt/dist/lib/types";
+//import { MVTLoaderOptions } from "@loaders.gl/mvt/dist/lib/types";
+import { MVTLoaderOptions } from "@loaders.gl/mvt";
 import { ImageLoaderOptions } from "@loaders.gl/images/dist/image-loader";
 import { Compression } from "pmtiles";
 // __VERSION__ is injected by babel-plugin-version-inline
