@@ -12451,7 +12451,7 @@
     name: "PMTiles",
     version: VERSION,
     extensions: ["pmtiles"],
-    mimeTypes: ["application/x-protobuf"],
+    mimeTypes: ["application/x-protobuf", "binary/octet-stream"],
     worker: true,
     category: "geometry",
     options: DEFAULT_PMT_LOADER_OPTIONS

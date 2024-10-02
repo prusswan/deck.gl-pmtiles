@@ -26,11 +26,12 @@ const INITIAL_VIEW_STATE = {
 
 export default function App() {
   const [dataSource, setDataSource] = useState<string>(
-    "/output.pmtiles"
+    //"/output.pmtiles"
+    "/overture_base_z6.pmtiles"
   );
   const [zoomRange, setZoomRange] = useState<{ start: number; end: number }>({
     start: 5,
-    end: 10,
+    end: 18, //10,
   });
   const {
     isLoading,
@@ -66,6 +67,7 @@ export default function App() {
   }
 
   const layers = [
+
     new TileLayer({
       data: "https://c.tile.openstreetmap.org/{z}/{x}/{y}.png",
       minZoom: 0,
@@ -85,15 +87,24 @@ export default function App() {
         });
       },
     }),
+
     new PMTLayer({
       id: "pmtiles-layer",
       data: dataSource,
       onClick: (info) => {
         console.log(info);
       },
-      maxZoom: zoomRange.end,
-      minZoom: zoomRange.start,
-      getFillColor: (d: any) => [255 * (+d.properties.STATEFP / 90), 0, 0],
+      maxZoom: 6, //zoomRange.end,
+      minZoom: 0, //zoomRange.start,
+      //getFillColor: (d: any) => [255 * (+d.properties.STATEFP / 90), 0, 0],
+      //getFillColor: (d: any) => [255 * (0.5), 0, 0],
+      getFillColor: [50,205,50,50],
+      getLineColor: [255, 0, 0],
+      getLineWidth: 20,
+      lineWidthMinPixels: 1,
+      //filled: false,
+      filled: true,
+      stroked: true,
       pickable: true,
     }),
   ];

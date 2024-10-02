@@ -197,6 +197,7 @@ export class PMTLayer<
 
         loadOptions = {
           ...loadOptions,
+          //mimeType: "application/x-protobuf",
           mimeType: "application/x-protobuf",
           pmt: {
             workerUrl:
