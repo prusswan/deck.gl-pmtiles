@@ -6,6 +6,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 
 export default [
+  // common js
   {
     input: `src/index.ts`,
     plugins: [esbuild()],
@@ -26,8 +27,10 @@ export default [
     },
   },
   // iife bundle for use with pydeck, see https://github.com/visgl/deck.gl/issues/4506
+  /*
   {
     input: 'src/bundle.js',
+    //input: 'dist/index.js',
     output: {
       file: 'dist/bundle.js',
       format: 'iife',
@@ -47,5 +50,6 @@ export default [
       commonjs()
     ]
   }
+  */
 
 ]

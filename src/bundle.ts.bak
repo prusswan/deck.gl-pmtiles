@@ -1,5 +1,4 @@
-//import { PMTLayer } from "./pmt-layer/pmt-layer";
-import { PMTLayer } from "../dist/index.js";
+import { PMTLayer } from "./pmt-layer/pmt-layer";
 
 const _global = typeof window === 'undefined' ? global : window;
 _global.PMTLayerLibrary = {PMTLayer};
