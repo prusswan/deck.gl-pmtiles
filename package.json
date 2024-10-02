@@ -1,7 +1,7 @@
 {
   "name": "@maticoapp/deck.gl-pmtiles",
   "author": "Dylan Halpern",
-  "packageManager": "yarn@3.2.2",
+  "packageManager": "yarn@1.22.22",
   "types": "dist/index.d.ts",
   "module": "dist/index.js",
   "main": "dist/index.js",
