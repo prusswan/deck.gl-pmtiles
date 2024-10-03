@@ -19,6 +19,7 @@
     "@rollup/plugin-commonjs": "^28.0.0",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-replace": "^6.0.1",
     "@rollup/plugin-typescript": "^12.1.0",
     "@types/ms": "^0.7.30",
     "@typescript-eslint/eslint-plugin": "latest",
@@ -37,6 +38,7 @@
   "dependencies": {
     "@loaders.gl/core": "^4.0.0",
     "@loaders.gl/csv": "^4.0.0",
+    "@rollup/plugin-alias": "^5.1.1",
     "deck.gl": "9.0.32",
     "pmtiles": "^3.2.0",
     "rollup": "^4.24.0",
@@ -75,5 +77,9 @@
   "bugs": {
     "url": "https://github.com/Matico-Platform/deck.gl-pmtiles/issues"
   },
-  "homepage": "https://github.com/Matico-Platform/deck.gl-pmtiles#readme"
+  "homepage": "https://github.com/Matico-Platform/deck.gl-pmtiles#readme",
+  "browser": {
+    "child_process": false,
+    "@loaders.gl/worker-utils/dist/lib/process-utils/child-process-proxy.js": false
+  }
 }
