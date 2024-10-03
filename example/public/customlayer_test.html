@@ -1,17 +1,111 @@
 <html>
-    <head>
-    </head>
-    <body>
-        <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/gh/agressin/pydeck_myTileLayer@master/dist/bundle.js"></script>
-        <script src="https://unpkg.com/pydeck-custom-layer-demo/dist/bundle.js"></script>
-        <!--
-        <script src="../../dist/dist.min.js"></script>
-        -->
-        <script src="./dist/bundle.js"></script>
+  <head>
+    <!-- adapted from basic standalone example: https://github.com/visgl/deck.gl/blob/master/examples/get-started/scripting/basic/index.html -->
 
-        <script>
-            console.log(MyTileLayerLibrary);
-        </script>
-    </body>
+    <!-- deck.gl standalone bundle -->
+    <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/agressin/pydeck_myTileLayer@master/dist/bundle.js"></script>
+    <script src="https://unpkg.com/pydeck-custom-layer-demo/dist/bundle.js"></script>
+
+    <script src="./dist/bundle.js"></script>
+
+    <script>
+      console.log(MyTileLayerLibrary);
+      console.log("loading custom layer library:", PMTLayerLibrary);
+    </script>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet" />
+
+    <style type="text/css">
+      body {margin: 0; padding: 0;}
+      #container {width: 100vw; height: 100vh;}
+    </style>
+  </head>
+
+  <body>
+    <div id="container"></div>
+
+    <script type="text/javascript">
+      const COUNTRIES =
+        'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_scale_rank.geojson'; //eslint-disable-line
+      const AIR_PORTS =
+        'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_10m_airports.geojson';
+
+      const deckgl = new deck.DeckGL({
+        map: false,
+        container: 'container',
+
+        initialViewState: {
+          latitude: 51.47,
+          longitude: 0.45,
+          zoom: 4,
+          bearing: 0,
+          pitch: 30
+        },
+        controller: true,
+
+        layers: [
+          new deck.GeoJsonLayer({
+            id: 'base-map',
+            data: COUNTRIES,
+            // Styles
+            stroked: true,
+            filled: true,
+            lineWidthMinPixels: 2,
+            opacity: 0.4,
+            getLineColor: [60, 60, 60],
+            getFillColor: [200, 200, 200]
+          }),
+          /*
+          new deck.GeoJsonLayer({
+            id: 'airports',
+            data: AIR_PORTS,
+            // Styles
+            filled: true,
+            pointRadiusMinPixels: 2,
+            pointRadiusScale: 2000,
+            getPointRadius: f => (11 - f.properties.scalerank),
+            getFillColor: [200, 0, 80, 180],
+            // Interactive props
+            pickable: true,
+            autoHighlight: true,
+            onClick: info => info.object && alert(`${info.object.properties.name} (${info.object.properties.abbrev})`)
+          }),
+          new deck.ArcLayer({
+            id: 'arcs',
+            data: AIR_PORTS,
+            dataTransform: d => d.features.filter(f => f.properties.scalerank < 4),
+            // Styles
+            getSourcePosition: f => [-0.4531566,51.4709959], // London
+            getTargetPosition: f => f.geometry.coordinates,
+            getSourceColor: [0, 128, 200],
+            getTargetColor: [200, 0, 80],
+            getWidth: 1
+          })
+          */
+          new PMTLayerLibrary.PMTLayer({
+            id: "pmtiles-layer",
+            //data: 'overture_base_z6.pmtiles',
+            data: 'https://overturemaps-tiles-us-west-2-beta.s3.amazonaws.com/2024-08-20/base.pmtiles',
+            onClick: (info) => {
+              console.log(info);
+            },
+            maxZoom: 6, //zoomRange.end,
+            minZoom: 0, //zoomRange.start,
+            //getFillColor: (d: any) => [255 * (+d.properties.STATEFP / 90), 0, 0],
+            //getFillColor: (d: any) => [255 * (0.5), 0, 0],
+            getFillColor: [50,205,50,50],
+            getLineColor: [255, 0, 0],
+            getLineWidth: 20,
+            lineWidthMinPixels: 1,
+            //filled: false,
+            filled: true,
+            stroked: true,
+            pickable: true,
+          })
+        ]
+      });
+    </script>
+  </body>
 </html>
