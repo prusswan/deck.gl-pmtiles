@@ -48,10 +48,13 @@
     "example": "cd example && yarn dev",
     "dev": "concurrently \"yarn build-dev\" \"yarn workspace example-pmtiles dev\"",
     "build": "tsc && npm run pre-build && rollup -c",
+    "build-yarn": "tsc && yarn run pre-build && rollup -c",
     "pre-build": "tsc && npm run build-worker && npm run build-bundle",
+    "pre-build-yarn": "tsc && yarn run build-worker && yarn run build-bundle",
     "build-bundle": "esbuild src/pmt-loader/bundle.js --bundle --outfile=dist/dist.min.js",
     "build-worker": "esbuild src/pmt-loader/workers/pmt-worker.ts --bundle --outfile=dist/pmt-worker.js --define:__VERSION__=\\\"$npm_package_version\\\"",
     "build-dev": "tsc && npm run pre-build && rollup -c",
+    "build-dev-yarn": "tsc && yarn run pre-build && rollup -c",
     "type-check": "tsc --noEmit"
   },
   "description": "This repo provides a typed Deck.gl layer and loader for PMTiles data. PMTiles data provides a serverless and compact way to store tile geospatial data. Combined with Deck.gl's rendering, this provides a flexible and powerful way to cheaply manage geospatial data.",

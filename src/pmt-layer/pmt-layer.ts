@@ -9,6 +9,7 @@ import { type DefaultProps } from "@deck.gl/core";
 import { GeoJsonLayer, type GeoJsonLayerProps } from "@deck.gl/layers";
 
 import { findTile, PMTiles, zxyToTileId } from "pmtiles";
+import { Header } from "pmtiles";
 
 // see https://unpkg.com/browse/@deck.gl/geo-layers@9.0.27/dist/mvt-layer/mvt-layer.d.ts
 //import type { BinaryFeatures } from "@loaders.gl/schema";
@@ -162,17 +163,35 @@ export class PMTLayer<
   static layerName = "PMTilesLayer";
   static defaultProps = defaultProps;
 
-  /*
+
   state!: MVTLayer<ParsedPmTile>['state'] & {
-    binary: boolean;
+    raster: boolean;
+    pmtiles: DeckglPmtiles; // | null;
+    header: Header; // | null;
     //data: URLTemplate;
-    tileJSON: TileJson | null;
-    highlightColor?: number[];
-    hoveredFeatureId: number | string | null;
-    hoveredFeatureLayerName: string | null;
+    //tileJSON: TileJson | null;
+    //highlightColor?: number[];
+    //hoveredFeatureId: number | string | null;
+    //hoveredFeatureLayerName: string | null;
   };
-  */
+
   //state!: defaultProps;
+  /*
+  let typeError1 =  `Property 'raster' does not exist on
+    type {
+      tileset: Tileset2D | null;
+      isLoaded: boolean;
+      frameNumber?: number | undefined;
+    } & {
+      binary: boolean;
+      data: URLTemplate;
+      tileJSON: TileJson | null;
+      highlightColor?: number[] | undefined;
+      hoveredFeatureId: string | ... 1 more ... | null;
+      hoveredFeatureLayerName: string | null;
+    }
+  `;
+  */
 
   initializeState(): void {
     super.initializeState();
@@ -217,9 +236,12 @@ export class PMTLayer<
     return pmtiles
       .getZxyOffset(z, x, y, signal)
       .then((entry: Awaited<ZxyOffset | undefined>) => {
+
         if (!entry) {
-          return new Promise((resolve) => resolve(null));
+          //return new Promise((resolve) => resolve(null));
+          return null;
         }
+
         const tileOffset = entry.offset + header.tileDataOffset;
         const tileLength = entry.length;
 
@@ -228,6 +250,7 @@ export class PMTLayer<
           //mimeType: "application/x-protobuf",
           mimeType: "application/x-protobuf",
           pmt: {
+            // may need to fix this later
             workerUrl:
               "https://unpkg.com/@maticoapp/deck.gl-pmtiles@latest/dist/pmt-worker.js",
             coordinates: this.context.viewport.resolution ? "wgs84" : "local",
@@ -243,7 +266,7 @@ export class PMTLayer<
             },
           },
         };
-        return fetch(data, {
+        return fetch(data as string, {
           propName: "data",
           layer: this,
           loadOptions,
