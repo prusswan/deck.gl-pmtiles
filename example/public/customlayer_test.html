@@ -91,6 +91,11 @@
             onClick: (info) => {
               console.log(info);
             },
+            //uncomment to disable use of web workers: https://deck.gl/docs/developer-guide/loading-data#loaders-and-web-workers
+            /*
+            loadOptions: {worker: false},
+            loaders: [PMTLayerLibrary.PMTLoader],
+            */
             maxZoom: 6, //zoomRange.end,
             minZoom: 0, //zoomRange.start,
             //getFillColor: (d: any) => [255 * (+d.properties.STATEFP / 90), 0, 0],

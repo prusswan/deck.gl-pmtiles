@@ -92,6 +92,7 @@ export type ParsedPmTile = Feature[] | BinaryFeatureCollection;
 
 export type ExtraProps = {
   raster?: boolean;
+  workerUrl?: string;
 };
 
 export type _PMTLayerProps = _MVTLayerProps & ExtraProps;
@@ -121,7 +122,7 @@ export class DeckglPmtiles extends PMTiles {
     const header = await this.cache.getHeader(this.source);
     // V2 COMPATIBILITY
     // if (header.specVersion < 3) {
-    // 	return v2.getZxy(header, this.source, this.cache, z, x, y, signal);
+    //  return v2.getZxy(header, this.source, this.cache, z, x, y, signal);
     // }
 
     if (z < header.minZoom || z > header.maxZoom) {
@@ -168,6 +169,7 @@ export class PMTLayer<
     raster: boolean;
     pmtiles: DeckglPmtiles; // | null;
     header: Header; // | null;
+    workerUrl: string | null;
     //data: URLTemplate;
     //tileJSON: TileJson | null;
     //highlightColor?: number[];
@@ -203,6 +205,8 @@ export class PMTLayer<
 
     // @ts-ignore
     const raster = this.props.raster;
+    // @ts-ignore
+    const workerUrl = this.props.workerUrl;
 
     (this as any)._updateTileData = async (): Promise<void> => {
       const data = this.props.data;
@@ -210,12 +214,13 @@ export class PMTLayer<
       const raster = this.props.raster;
       const pmtiles = new DeckglPmtiles(data as string);
       const header = await pmtiles.getHeader();
-      this.setState({ data, pmtiles, raster, header });
+      this.setState({ data, pmtiles, raster, header, workerUrl });
     };
 
     this.setState({
       binary,
       raster,
+      workerUrl,
       data: null,
       // newly added below:
       tileJSON: null,
@@ -228,7 +233,7 @@ export class PMTLayer<
 //https://unpkg.com/browse/@deck.gl/geo-layers@8.8.9/src/mvt-layer/mvt-layer.ts
   getTileData(loadProps: TileLoadProps, iter?: number): Promise<ParsedPmTile> {
     const { index, signal } = loadProps;
-    const { data, binary, raster, pmtiles, header } = this.state;
+    const { data, binary, raster, pmtiles, header, workerUrl } = this.state;
     const { x, y, z } = index;
     let loadOptions = this.getLoadOptions();
     const { fetch } = this.props;
@@ -247,11 +252,9 @@ export class PMTLayer<
 
         loadOptions = {
           ...loadOptions,
-          //mimeType: "application/x-protobuf",
           mimeType: "application/x-protobuf",
           pmt: {
-            // may need to fix this later
-            workerUrl:
+            workerUrl: workerUrl ? workerUrl :
               "https://unpkg.com/@maticoapp/deck.gl-pmtiles@latest/dist/pmt-worker.js",
             coordinates: this.context.viewport.resolution ? "wgs84" : "local",
             tileIndex: index,
