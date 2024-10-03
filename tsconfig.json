@@ -22,7 +22,9 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "useDefineForClassFields": false,
+    "rootDir": "."
   },
+  "include": [ "**/*.ts"],
   "exclude": [
     "node_modules",
     "example/public/dist/**/*",
