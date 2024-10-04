@@ -18,7 +18,7 @@ import type { Feature } from "geojson";
 
 import type { Loader } from "@loaders.gl/loader-utils";
 
-import { PMTWorkerLoader } from "../pmt-loader";
+import { PMTWorkerLoader, PMTLoader } from "../pmt-loader";
 
 // from @deck.gl/geo-layers/src/mvt-layer/mvt-layer
 
@@ -95,6 +95,7 @@ export type ExtraProps = {
   workerUrl?: string;
 };
 
+//https://www.typescriptlang.org/docs/handbook/2/objects.html#intersection-types
 export type _PMTLayerProps = _MVTLayerProps & ExtraProps;
 
 export type PmtLayerProps = _PMTLayerProps & TileLayerProps<ParsedPmTile>;
@@ -107,7 +108,8 @@ const defaultProps: DefaultProps<PmtLayerProps> = {
   highlightedFeatureId: null,
   binary: true,
   raster: false,
-  loaders: [PMTWorkerLoader],
+  loaders: undefined,
+  //loaders: [PMTWorkerLoader],
 };
 
 type ZxyOffset = { offset: number; length: number };
@@ -170,6 +172,7 @@ export class PMTLayer<
     pmtiles: DeckglPmtiles; // | null;
     header: Header; // | null;
     workerUrl: string | null;
+    loaders?: Loader[];
     //data: URLTemplate;
     //tileJSON: TileJson | null;
     //highlightColor?: number[];
@@ -208,6 +211,11 @@ export class PMTLayer<
     // @ts-ignore
     const workerUrl = this.props.workerUrl;
 
+    console.log("setting default loaders according to worker flag (if not passed in as props)");
+    const useWorker = !(this.props.loadOptions && this.props.loadOptions.worker == false);
+    const loaders = this.props.loaders || (useWorker ? [PMTWorkerLoader] : [PMTLoader]);
+    console.log("useWorker?", useWorker, "loaders used:", loaders);
+
     (this as any)._updateTileData = async (): Promise<void> => {
       const data = this.props.data;
       // @ts-ignore
@@ -222,6 +230,7 @@ export class PMTLayer<
       raster,
       workerUrl,
       data: null,
+      loaders: loaders,
       // newly added below:
       tileJSON: null,
       hoveredFeatureId: null,
@@ -233,7 +242,12 @@ export class PMTLayer<
 //https://unpkg.com/browse/@deck.gl/geo-layers@8.8.9/src/mvt-layer/mvt-layer.ts
   getTileData(loadProps: TileLoadProps, iter?: number): Promise<ParsedPmTile> {
     const { index, signal } = loadProps;
-    const { data, binary, raster, pmtiles, header, workerUrl } = this.state;
+    const { data, binary, raster, pmtiles, header, workerUrl, loaders } = this.state;
+    /*
+    console.log("this.state", this.state);
+    console.log("this.props", this.props);
+    console.log("loadProps", loadProps);
+    */
     const { x, y, z } = index;
     let loadOptions = this.getLoadOptions();
     const { fetch } = this.props;
@@ -269,9 +283,11 @@ export class PMTLayer<
             },
           },
         };
+
         return fetch(data as string, {
           propName: "data",
           layer: this,
+          loaders,
           loadOptions,
           signal,
         });

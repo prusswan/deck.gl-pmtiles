@@ -61,6 +61,7 @@ export const PMTLoader: LoaderWithParser = {
     return parsePMT(arrayBuffer, options);
   },
   binary: true,
+  worker: false
 };
 
 /**

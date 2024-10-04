@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PMTLayer } from "../../src";
+import { PMTLayer, PMTLoader } from "../../src";
 import "./App.css";
 
 //https://deck.gl/docs/get-started/using-with-typescript: v9 and v8 syntax differences
@@ -102,6 +102,8 @@ export default function App() {
       onClick: (info) => {
         console.log(info);
       },
+      //loadOptions: {worker: false},
+      //loaders: [PMTLoader],
       maxZoom: 6, //zoomRange.end,
       minZoom: 0, //zoomRange.start,
       //getFillColor: (d: any) => [255 * (+d.properties.STATEFP / 90), 0, 0],
