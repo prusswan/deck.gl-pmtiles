@@ -85,3 +85,4 @@ This repo's code builds on existing work adapted from:
 - added iife build for use with non-node standalone/browser usage of deck.gl
 - added standalone example with overture base pmtiles
 - tested on Node 18
+- added pydeck example: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/prusswan/deck.gl-pmtiles/overture?filepath=example/public/pydeck_test.ipynb)
